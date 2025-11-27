@@ -1,0 +1,43 @@
+/*  google font */
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+/* ..... tailwind initialize.........*/
+@import "tailwindcss";
+/*.........daisyui initialize......   */
+@plugin "daisyui";
+/* .............. font use over all body */
+body{
+  font-family: "Urbanist", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+
+}
+/*............ theme   .....*/
+@custom-variant dark (&:where(.dark *));
+html, body,
+#root{
+  height:100%;
+}
+/*........ vanilla css  color ....... */
+
+:root{
+  --primary:#CAEB66;
+  --tertiary:#03373D;
+  --textPrimary:#606060;
+  --text-secondary:#03373D;
+  --secondary:#1F1F1F;
+}
+.bg-primary{
+  background-color: var(--primary);
+}
+.text-primary{
+  color: var(--textPrimary);
+}
+.text-secondary{
+  color: var(--text-secondary);
+}
+.bg-secondary{
+  background-color: var(--secondary);
+}
+.bg-tertiary{
+  background-color: var(--tertiary);
+}
