@@ -53,6 +53,11 @@ const Dashboard = () => {
               <li>
                 <NavLink to="/dashboard/myParcel">My Parcel</NavLink>
               </li>
+              <li>
+                <NavLink to="/dashboard/payment-history">
+                  payment history
+                </NavLink>
+              </li>
 
               {/* List item */}
               <li>

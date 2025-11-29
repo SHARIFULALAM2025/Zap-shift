@@ -5,11 +5,13 @@ import Swal from 'sweetalert2'
 import useAxios from '../../Authentication/Auth/useAxios'
 import { useContext } from 'react'
 import { AuthContext } from '../../Authentication/Auth/AuthContext'
+import { useNavigate } from 'react-router'
 
 const ParcelSend = () => {
   const {user}=useContext(AuthContext)
   const [region, setRegion] = useState([])
- const axiosSecure = useAxios()
+  const axiosSecure = useAxios()
+  const navigate=useNavigate()
   useEffect(() => {
 
     fetch('http://localhost:5000/home/center/data')
@@ -57,7 +59,8 @@ const ParcelSend = () => {
           axiosSecure.post('/send/parcel/data', data)
 
             .then(res => {
-            console.log(res.data);
+              console.log(res.data);
+              navigate('/dashboard/myParcel')
 
           })
         }

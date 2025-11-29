@@ -8,7 +8,7 @@ import { FiEdit } from 'react-icons/fi'
 import { MdOutlinePreview } from 'react-icons/md'
 import { BsFillTrash3Fill } from 'react-icons/bs'
 import Swal from 'sweetalert2'
-import { Link } from 'react-router'
+
 
 const MyParcel = () => {
   const { user } = useContext(AuthContext)
@@ -46,6 +46,18 @@ const MyParcel = () => {
       }
     })
   }
+  const handelClick = async(item) => {
+    const paymentInfo = {
+      cost: item.cost,
+      parcelId: item._id,
+      senderEmail: item.senderEmail,
+      parcelName: item.parcelName,
+    }
+    const res = await axiosSecure.post(`/payment-checkout-session`, paymentInfo)
+    console.log(res.data.url)
+    window.location.assign(res.data.url)
+
+  }
   return (
     <div>
       <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
@@ -69,12 +81,15 @@ const MyParcel = () => {
                 <td>{item.parcelName}</td>
                 <td>{item.cost}</td>
                 <td>
-                  {item.paymentStatus === 'paid' ? (
-                    <span>paid</span>
+                  {item.payment_status === 'paid' ? (
+                    <span className='px-3 py-2 bg-amber-300'>paid</span>
                   ) : (
-                    <Link to={`/dashboard/payment/${item._id}`}>
-                      <button className="btn btn-primary">pay</button>
-                    </Link>
+                    <button
+                      onClick={() => handelClick(item)}
+                      className="btn btn-primary"
+                    >
+                      pay
+                    </button>
                   )}
                 </td>
                 <td>{item.DeliveryStatus}</td>
