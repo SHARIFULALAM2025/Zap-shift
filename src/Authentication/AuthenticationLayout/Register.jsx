@@ -4,12 +4,13 @@ import { useContext } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router'
 import Social from './SocialLogin/Social'
 import axios from 'axios'
+import useAxios from '../Auth/useAxios'
 
 const Register = () => {
   const location = useLocation()
   console.log('location in register', location);
   const navigate=useNavigate()
-
+  const axiosSecure=useAxios()
   const { createUser, userProfileImage, setUser } = useContext(AuthContext)
   const {
     register,
@@ -20,7 +21,7 @@ const Register = () => {
     console.log(data.photo[0])
     const profileImage = data.photo[0]
     createUser(data.email, data.password).then((result) => {
-      console.log(result.user)
+
       const formData = new FormData()
       formData.append('image', profileImage)
       const image_URL = `https://api.imgbb.com/1/upload?key=${
@@ -28,10 +29,21 @@ const Register = () => {
       }`
       axios.post(image_URL, formData)
         .then((res) => {
-        console.log(res.data.data.url)
+          const photoURL = res.data.data.url;
+          const userInfo = {
+            yourEmail: data.email,
+            displayName: data.name,
+            photo: photoURL,
+          }
+          axiosSecure.post('/person', userInfo).then((res) => {
+            if (res.data.insertedId) {
+              console.log('user created in the database')
+            }
+          })
+
         const userProfile = {
           displayName: data.name,
-          photoURL: res.data.data.url,
+          photoURL: photoURL,
         }
         userProfileImage(userProfile)
           .then(() => {
@@ -40,7 +52,7 @@ const Register = () => {
           })
           .catch(error => {
             console.log(error);
-            
+
           })
 
         })

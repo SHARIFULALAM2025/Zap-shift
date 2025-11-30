@@ -82,7 +82,7 @@ const ParcelSend = () => {
   return (
     <div>
       <div className="">
-        {' '}
+       
         <h1 className="text-2xl font-bold">send a parcel</h1>
         <div className="border border-b-2"></div>
       </div>

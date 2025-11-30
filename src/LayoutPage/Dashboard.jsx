@@ -3,7 +3,9 @@ import { Link, NavLink, Outlet } from 'react-router'
 import { FaHome } from 'react-icons/fa'
 import { IoSettings } from 'react-icons/io5'
 import { GoSidebarCollapse } from 'react-icons/go'
+import useHook from '../Authentication/Auth/UseHook'
 const Dashboard = () => {
+  const { role } = useHook()
   return (
     <div>
       <div className="drawer lg:drawer-open max-w-7xl mx-auto">
@@ -58,6 +60,20 @@ const Dashboard = () => {
                   payment history
                 </NavLink>
               </li>
+              {role === 'admin' && (
+                <>
+                  <li>
+                    <NavLink to="/dashboard/rider-history">
+                      approve rider
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/dashboard/user-management">
+                      user manage
+                    </NavLink>
+                  </li>
+                </>
+              )}
 
               {/* List item */}
               <li>
